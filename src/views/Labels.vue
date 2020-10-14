@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        Labels.vue
     </div>
 </template>
 
@@ -11,6 +11,7 @@
         
     })
 </script>
-<style lang="scss" scoped>
+
+<style scoped>
 
 </style>
