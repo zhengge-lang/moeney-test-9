@@ -1,19 +1,17 @@
 <template>
-    <div>
-        Money.vue
-        <Nav />
-    </div>
+  <div>
+    <Layout>
+      <p>Money</p>
+    </Layout>
+  </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    // import Nav from '@/components/Nav.vue'
+import Vue from "vue";
+// import Nav from '@/components/Nav.vue'
 
-    export default Vue.extend({
-        name: "Money",
-        // components: { Nav }
-    })
+export default Vue.extend({
+  name: "Money",
+});
 </script>
-<style lang="scss" scoped>
 
-</style>
