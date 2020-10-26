@@ -3,51 +3,27 @@
    
     <div>
     <router-view/>
-      <!-- <router-link to="/money">记账</router-link>|
-        <router-link to="/labels">标签</router-link>|
-        <router-link to="/statistics">统计</router-link>| -->
+     
       </div>
     
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+
   </div>
 </template>
 
 <style lang="scss">
-@import "assets/styles/test.scss";
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body{
-  
-  line-height: 1.5;
-}
-a{
-  text-decoration: none;
-color: inherit;
-}
+@import "~@/assets/styles/helper.scss";
+@import "assets/styles/colo.scss";
+@import "~@/assets/styles/reset.scss";
+// body{
+//   }
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-family: $font-hei;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: #333;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>

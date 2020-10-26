@@ -17,6 +17,6 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "~@/assets/styles/test.scss";
+  @import "~@/assets/styles/colo.scss";
   
 </style>
