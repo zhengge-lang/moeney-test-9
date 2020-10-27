@@ -29,11 +29,9 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import "~@/assets/styles/colo.scss";
 @import "~@/assets/styles/helper.scss";
-
 .selected {
   color: $color-highlight;
 }
-
 p {
   color: $red;
 }
