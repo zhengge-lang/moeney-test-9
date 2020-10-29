@@ -3,7 +3,7 @@
     <Layout>
       <Tags />
       <Notes />
-      <Types />
+      <Types  name='' />
       <NumberPad />
     </Layout>
   </div>

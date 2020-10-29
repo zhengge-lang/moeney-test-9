@@ -19,10 +19,10 @@
 </template>
 
 <script lang="ts">
-
-    export default ({
-        
-    })
+import Vue from 'vue'
+export default Vue.extend({
+  
+})
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/styles/colo.scss";

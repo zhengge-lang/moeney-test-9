@@ -1,18 +1,36 @@
 <template>
     <div>
         <ul class="types">
-          <li class="selected2">支出</li>
-          <li>收入</li>
+          <li :class="type==='-'?'selected2':''" @click="ctype('-')">支出</li>
+          <li :class="type==='+'?'selected2':''" @click="ctype('+')">收入</li>
         </ul>
       </div>
 </template>
 
-<script lang="ts">
 
-    export default ({
-        
-    })
+<script lang="ts">
+import Vue from 'vue'
+import {  Component, Prop } from 'vue-property-decorator'
+
+@Component
+
+export default class Types extends Vue {
+    @Prop(String)  name: string | undefined
+  
+  type = '-'
+ 
+  ctype(e: string){
+          if(e!=='-'&&e!=='+'){
+            throw new Error('type is unknown')
+          }
+          this.type=e
+        }
+  mounted() {
+    console.log(this.name+'12222') 
+  }
+}
 </script>
+ 
 <style lang="scss" scoped>
 @import "~@/assets/styles/colo.scss";
 @import "~@/assets/styles/helper.scss";
