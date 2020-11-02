@@ -1,32 +1,76 @@
 <template>
     
       <div class="numberPad">
-        <div class="output">100</div>
+        <div class="output">{{output}}</div>
         <div class="buttons">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>清除</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>清空</button>
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button class="ok">OK</button>
-          <button class="zero"> 0</button>
-          <button>.</button>
+          <button @click="add">1</button>
+          <button @click="add" >2</button>
+          <button @click="add" >3</button>
+          <button @click="remove" >清除</button>
+          <button @click="add" >4</button>
+          <button @click="add" >5</button>
+          <button @click="add" >6</button>
+          <button @click="clear" >清空</button>
+          <button @click="add" >7</button>
+          <button @click="add" >8</button>
+          <button @click="add" >9</button>
+          <button   class="ok">OK</button>
+          <button @click="add"  class="zero"> 0</button>
+          <button @click="add" >.</button>
         </div>
       </div>
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
+import { Component } from'vue-property-decorator';
+@Component
+export default class NumberPad extends Vue {
+  output='0'
+  add(e: MouseEvent){
+    const button = (e.target as HTMLButtonElement);
+      const input = button.textContent!;
+    if(this.output.length===15){
+      return
+    }
+    
+    if(this.output==='0'&&input==='0'){
+      return
+      
+    }else if(this.output==='0'&&'123456789'.indexOf(input)>=0){
+      this.output=input
+      return
+    }else
+        if(this.output.indexOf('.')!==-1&&input==='.'){
+  
+        return
+      }else{
+        this.output+=input
+  
+      }
+    
+    
+    console.log(this.output.indexOf('.'))
 
-    export default ({
-        
-    })
+  }
+  remove(){
+    
+    if(this.output.length===1){
+      console.log('123')
+      return
+    }else{
+      this.output=this.output.slice(0,     -1)
+    }
+  }
+  // ok(){}
+  clear(){
+    this.output='0'
+  }
+
+}
+
 </script>
+
 <style lang="scss" scoped>
 @import "~@/assets/styles/colo.scss";
 @import "~@/assets/styles/helper.scss";
@@ -38,6 +82,7 @@
     text-align: right;
     background: #ffffff;
     box-shadow: inset 0px -2px 3px rgba(0, 0, 0, 0.25),inset 0px 2px 3px rgba(0, 0, 0, 0.25);
+    height: 70px;
   }
   .buttons {
     @extend %clearFix;
