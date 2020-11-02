@@ -14,7 +14,7 @@
           <button @click="add" >7</button>
           <button @click="add" >8</button>
           <button @click="add" >9</button>
-          <button   class="ok">OK</button>
+          <button  class="ok">OK</button>
           <button @click="add"  class="zero"> 0</button>
           <button @click="add" >.</button>
         </div>
@@ -22,30 +22,28 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component } from'vue-property-decorator';
+import Vue from 'vue'
+import { Component } from'vue-property-decorator'
 @Component
 export default class NumberPad extends Vue {
   output='0'
-  add(e: MouseEvent){
-    const button = (e.target as HTMLButtonElement);
-      const input = button.textContent!;
+  add(e: any){
     if(this.output.length===15){
       return
     }
     
-    if(this.output==='0'&&input==='0'){
+    if(this.output==='0'&&e.target.innerText==='0'){
       return
       
-    }else if(this.output==='0'&&'123456789'.indexOf(input)>=0){
-      this.output=input
+    }else if(this.output==='0'&&'123456789'.indexOf(e.target.innerText)>=0){
+      this.output=e.target.innerText
       return
     }else
-        if(this.output.indexOf('.')!==-1&&input==='.'){
+        if(this.output.indexOf('.')!==-1&&e.target.innerText==='.'){
   
         return
       }else{
-        this.output+=input
+        this.output+=e.target.innerText
   
       }
     
