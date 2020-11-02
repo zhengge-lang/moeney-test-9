@@ -46,13 +46,8 @@ export default class NumberPad extends Vue {
         this.output+=e.target.innerText
   
       }
-    
-    
-    console.log(this.output.indexOf('.'))
-
   }
   remove(){
-    
     if(this.output.length===1){
       console.log('123')
       return
