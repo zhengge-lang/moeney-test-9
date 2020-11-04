@@ -1,18 +1,30 @@
 <template>
-    <div>
-        <label for="" class="notes">
-          <span class="name">备注：</span>
-          <input type="text" placeholder="在这里添加备注" />
-        </label>
-      </div>
+  <div>
+    <label for="" class="notes">
+      <span class="name">备注：</span>
+      <input type="text" placeholder="在这里添加备注" v-model="x"  />
+      {{x}}
+    </label>
+  </div>
 </template>
 
 <script lang="ts">
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+@Component
+export default class Notes extends Vue {
+  x= ''
+  // value1 = "" as string
 
-    export default ({
-        
-    })
+  // t(e:KeyboardEvent){
+  //   console.log(e)
+  //   const input = e.target as HTMLInputElement
+  //   this.value1 = input.value
+    
+  // }
+}
 </script>
+
 <style lang="scss" scoped>
 @import "~@/assets/styles/colo.scss";
 @import "~@/assets/styles/helper.scss";
@@ -34,5 +46,4 @@
     background: transparent;
   }
 }
-
 </style>
