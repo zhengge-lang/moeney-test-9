@@ -34,6 +34,7 @@ export default class Tags extends Vue{
       }else{
       this.tag1.splice(this.tag1.indexOf(input),1)  //删
       }
+      this.$emit('update:value',this.tag1)
     }
     create(){
       

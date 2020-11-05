@@ -10,10 +10,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop,Watch } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
   x= ''
+    @Watch('x')
+  onPersonChanged2(val: string, oldVal: string) {
+    this.$emit('update:value',val)
+  }
   // value1 = "" as string
 
   // t(e:KeyboardEvent){

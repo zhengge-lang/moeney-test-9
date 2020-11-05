@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul class="types">
-          <li :class="type==='-'?'selected2':''" @click="ctype('-')">支出</li>
-          <li :class="type==='+'?'selected2':''" @click="ctype('+')">收入</li>
+          <li :class="value==='-'?'selected2':''" @click="ctype('-')">支出</li>
+          <li :class="value==='+'?'selected2':''" @click="ctype('+')">收入</li>
         </ul>
       </div>
 </template>
@@ -15,19 +15,17 @@ import {  Component, Prop } from 'vue-property-decorator'
 @Component
 
 export default class Types extends Vue {
-    @Prop(String)  name: string | undefined
+    @Prop(String)  value!: string 
   
-  type = '-'
+  
  
   ctype(e: string){
           if(e!=='-'&&e!=='+'){
             throw new Error('type is unknown')
           }
-          this.type=e
+          this.$emit('update:value',e)
         }
-  mounted() {
-    console.log(this.name+'12222') 
-  }
+  
 }
 </script>
  

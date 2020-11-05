@@ -14,7 +14,7 @@
           <button @click="add" >7</button>
           <button @click="add" >8</button>
           <button @click="add" >9</button>
-          <button  class="ok">OK</button>
+          <button @click="done" class="ok">OK</button>
           <button @click="add"  class="zero"> 0</button>
           <button @click="add" >.</button>
         </div>
@@ -23,10 +23,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from'vue-property-decorator'
+import{  Component, Prop } from'vue-property-decorator'
 @Component
 export default class NumberPad extends Vue {
-  output='0'
+  @Prop(Number)  value!: number
+  output=this.value.toString()
   add(e: any){
     if(this.output.length===15){
       return
@@ -58,7 +59,9 @@ export default class NumberPad extends Vue {
   clear(){
     this.output='0'
   }
-
+  done(){
+    this.$emit('update:value',this.output)
+  }
 }
 
 </script>
