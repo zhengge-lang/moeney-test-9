@@ -1,11 +1,11 @@
 <template>
   <div>
-    {{record}}
+    {{recordlist}}
     <Layout>
       <Tags :datasource.sync="tags" @update:value="yyy"/>
       <Notes  @update:value ="nn"/>
       <Types  :value.sync="record.type" />
-      <NumberPad :value.sync="record.output" />
+      <NumberPad :value="record.output" @update:value ="gg" @submit="saverecord"/>
     </Layout>
   </div>
 </template>
@@ -18,7 +18,7 @@ import Tags from "@/components/Money/Tags.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
-import { Component,Prop } from'vue-property-decorator'
+import { Component,Prop,Watch  } from'vue-property-decorator'
 type Record ={
   tagn: string[];
   note: string;
@@ -36,10 +36,14 @@ type Record ={
 
 export default class Money extends Vue{
       tags: string[]=['衣','食','住']
-      
+      recordlist: Record[]=JSON.parse( window.localStorage.getItem('recordlist')||'')
       record: Record={
         tagn:[],note:'',type:'+',output:10
       }
+        @Watch('recordlist')
+  onChanged2(val: string, oldVal: string) {
+      window.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
+}
       yyy(tagc: string[]){
         this.record.tagn=tagc
       }
@@ -52,6 +56,11 @@ export default class Money extends Vue{
        gg(val: string){
         this.record.output =parseFloat(val)
       }
+      saverecord(){
+        this.recordlist.push(JSON.parse(JSON.stringify(this.record)))
+        console.log( this.recordlist)
+      }
+
   
 }
 </script>
