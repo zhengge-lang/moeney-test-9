@@ -19,11 +19,13 @@ import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component,Prop,Watch  } from'vue-property-decorator'
+const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
 type Record ={
   tagn: string[];
   note: string;
   type: string;
   output: number;
+  time?: Date;
 }
 @Component({
   components: {
@@ -36,10 +38,11 @@ type Record ={
 
 export default class Money extends Vue{
       tags: string[]=['衣','食','住']
-      recordlist: Record[]=JSON.parse( window.localStorage.getItem('recordlist')||'')
+      recordlist: Record[]=JSON.parse(window.localStorage.getItem('recordList') || '[]');
       record: Record={
         tagn:[],note:'',type:'+',output:10
       }
+ 
         @Watch('recordlist')
   onChanged2(val: string, oldVal: string) {
       window.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
@@ -57,7 +60,9 @@ export default class Money extends Vue{
         this.record.output =parseFloat(val)
       }
       saverecord(){
-        this.recordlist.push(JSON.parse(JSON.stringify(this.record)))
+        const record2: Record =JSON.parse(JSON.stringify(this.record))
+        this.recordlist.push(record2)
+        record2.time=new Date()
         console.log( this.recordlist)
       }
 
