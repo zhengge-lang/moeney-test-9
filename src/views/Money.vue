@@ -65,8 +65,6 @@ export default class Money extends Vue{
         record2.time=new Date()
         console.log( this.recordlist)
       }
-
-  
 }
 </script>
 
