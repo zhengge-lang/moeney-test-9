@@ -1,11 +1,11 @@
 <template>
     <div>
     <Layout>
-      <ol class="tags">
-        <li v-for="lii in data"
-        :key="lii"><span>{{lii}}</span><Icon name="left"></Icon></li>
+      <div class="tags">
+        <router-link class="yli" :to="`/labels/edit/${lii.id}`" v-for="lii in data"
+        :key="lii.id"><span>{{lii.name}}</span><Icon name="left"></Icon></router-link>
         
-      </ol>
+      </div>
       {{this.data}}
       <div>
         <button @click="newtag">新建标签</button>
@@ -20,10 +20,14 @@
   import model from "@/models/taglistModel.ts" 
 import {Component,Watch} from 'vue-property-decorator'
 import { extend } from 'vue/types/umd'
-model.fetch()
+
   @Component
    export default class Labels extends Vue{
-       data: string[]=model.data;      //  tags: string[]=['衣','食','住']
+       data=model.data;  
+       beforeCreate() {
+         
+         model.fetch()
+       }
        newtag(){
          
          const name = window.prompt('请输入标签名') as string
@@ -52,8 +56,10 @@ model.fetch()
 <style scoped>
     .tags{
       background:white;
+      font-size: 14px;
     }
-    li{
+    .yli{
+      min-height: 44px;
       padding: 12px 16px 16px 16px;
       display: flex;
       align-items: center;

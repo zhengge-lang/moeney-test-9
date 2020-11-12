@@ -1,7 +1,7 @@
 <template>
   <div>
     <label for="" class="notes">
-      <span class="name">备注：</span>
+      <span class="name">备注111：</span>
       <input type="text" placeholder="在这里添加备注" v-model="x"  />
       {{x}}
     </label>
@@ -18,6 +18,10 @@ export default class Notes extends Vue {
   onPersonChanged2(val: string, oldVal: string) {
     this.$emit('update:value',val)
   }
+    
+    aaa(name: any) {
+      console.log(name)
+    }
   // value1 = "" as string
 
   // t(e:KeyboardEvent){
