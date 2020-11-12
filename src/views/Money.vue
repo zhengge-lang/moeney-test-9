@@ -19,7 +19,7 @@ import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component,Prop,Watch  } from'vue-property-decorator'
-import model from "@/model.ts"
+import model from "@/models/recordModel.ts"
 // const model= require('@/model.js').default
 
 const recordList = model.fetch()
