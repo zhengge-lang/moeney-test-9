@@ -4,7 +4,7 @@
         <Icon class="ic" name="left"/>
         <span>编辑标签</span>
         </div>
-        <Notes :aaa="'aaa'"/>
+        <Notes :aaa="this.con" :bbb="`标签名`"/>
         {{con}}
     </Layout>
 </template>

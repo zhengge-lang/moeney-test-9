@@ -1,8 +1,10 @@
 <template>
   <div>
     <label for="" class="notes">
-      <span class="name">备注111：</span>
-      <input type="text" placeholder="在这里添加备注" v-model="x"  />
+      <!-- <span class="name" v-if="this.aaa">标签名</span> -->
+      <span class="name" >{{bbb}}</span>
+      <!-- <input type="text" :value="aaa" v-if="this.aaa" /> -->
+      <input type="text" :placeholder="aaa" v-model="x"  />
       {{x}}
     </label>
   </div>
@@ -14,14 +16,19 @@ import { Component, Prop,Watch } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
   x= ''
+   @Prop(String)  aaa!: string
+   @Prop(String)  bbb!: string
     @Watch('x')
   onPersonChanged2(val: string, oldVal: string) {
     this.$emit('update:value',val)
   }
+  created() {
+  //  if(this.aaa){
+     
+  //  } 
+  }
     
-    aaa(name: any) {
-      console.log(name)
-    }
+    
   // value1 = "" as string
 
   // t(e:KeyboardEvent){

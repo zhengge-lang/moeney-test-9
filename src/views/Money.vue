@@ -3,7 +3,7 @@
     {{recordlist}}
     <Layout>
       <Tags :datasource.sync="tags" @update:value="yyy"/>
-      <Notes  @update:value ="nn"/>
+      <Notes  @update:value ="nn"  :aaa="`在这里添加备注`" :bbb="`备注`"/>
       <Types  :value.sync="record.type" />
       <NumberPad :value="record.output" @update:value ="gg" @submit="saverecord"/>
     </Layout>
