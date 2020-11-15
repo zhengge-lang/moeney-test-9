@@ -16,8 +16,8 @@ import { Component, Prop,Watch } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
   x= ''
-   @Prop(String)  aaa!: string
-   @Prop(String)  bbb!: string
+   @Prop({required:true})  aaa!: string //一定是string
+   @Prop()  bbb?: string //?可能不存在
     @Watch('x')
   onPersonChanged2(val: string, oldVal: string) {
     this.$emit('update:value',val)

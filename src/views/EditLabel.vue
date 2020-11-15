@@ -6,16 +6,20 @@
         </div>
         <Notes :aaa="this.con" :bbb="`标签名`"/>
         {{con}}
+        <div class="wrapper">
+            <Button >删除标签</Button>
+        </div>
     </Layout>
 </template>
 
 <script lang="ts">
     import Vue from 'vue'
     import Notes from "@/components/Money/Notes.vue";
+    import Button from "@/components/Button.vue"
     import{ Component }from 'vue-property-decorator';
    @Component({
   components: {
-    Notes,
+    Notes,Button
   }
 })
 
@@ -42,5 +46,17 @@
         span{
             
         }
+    }
+    .wrapper{
+        text-align: center;
+    }
+    button{
+      min-height: 22px;
+      padding: 9px 15px;
+      border: none;
+      background: #767676;
+      border-radius: 4px;
+      margin-top: 44px;
+      color: #FFFFFF;
     }
 </style>

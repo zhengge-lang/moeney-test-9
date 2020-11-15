@@ -8,7 +8,7 @@
       </div>
       {{this.data}}
       <div>
-        <button @click="newtag">新建标签</button>
+        <Button @welcome="submit" >新建标签</Button>
       </div>
     </Layout>
   </div>
@@ -18,18 +18,25 @@
     import Vue from 'vue'
     // import Nav from '@/components/Nav.vue'
   import model from "@/models/taglistModel.ts" 
+  import Button from "@/components/Button.vue" 
+
 import {Component,Watch} from 'vue-property-decorator'
 import { extend } from 'vue/types/umd'
 
-  @Component
+@Component({
+  components: {
+   Button
+  }
+})
    export default class Labels extends Vue{
        data=model.data;  
        beforeCreate() {
          
          model.fetch()
        }
-       newtag(){
-         
+       submit(){
+        //  alert('Hi')
+        //  console.log(e+'222')
          const name = window.prompt('请输入标签名') as string
          if(name){
            
