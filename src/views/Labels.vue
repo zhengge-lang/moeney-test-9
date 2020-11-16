@@ -8,7 +8,7 @@
       </div>
       {{this.data}}
       <div>
-        <Button @welcome="submit" >新建标签</Button>
+        <Button @click.native="submit" >新建标签</Button>
       </div>
     </Layout>
   </div>

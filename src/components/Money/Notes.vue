@@ -4,7 +4,7 @@
       <!-- <span class="name" v-if="this.aaa">标签名</span> -->
       <span class="name" >{{bbb}}</span>
       <!-- <input type="text" :value="aaa" v-if="this.aaa" /> -->
-      <input type="text" :placeholder="aaa" v-model="x"  />
+      <input type="text"  :placeholder="value" :x="x" @input="onPersonChanged2($event.target.value)" />
       {{x}}
     </label>
   </div>
@@ -15,11 +15,14 @@ import Vue from "vue";
 import { Component, Prop,Watch } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
-  x= ''
-   @Prop({required:true})  aaa!: string //一定是string
+  // x?:{id:string,name:string}= window.localStorage.getItem(taglist)
+  @Prop()  x!: string 
+   @Prop({required:true})  value!: string //一定是string
    @Prop()  bbb?: string //?可能不存在
     @Watch('x')
-  onPersonChanged2(val: string, oldVal: string) {
+  onPersonChanged2(val: string) {
+    console.log(this.x)
+    console.log( '12312'+val)
     this.$emit('update:value',val)
   }
   created() {
@@ -27,6 +30,9 @@ export default class Notes extends Vue {
      
   //  } 
   }
+  // upgrate(e:KeyboardEvent){
+  //   this.x.id=e
+  // }
     
     
   // value1 = "" as string

@@ -4,8 +4,8 @@
         <Icon class="ic" name="left"/>
         <span>编辑标签</span>
         </div>
-        <Notes :aaa="this.con" :bbb="`标签名`"/>
-        {{con}}
+        <Notes :value="this.tag.name" :bbb="`标签名`"  @update:value ="gg"/>
+        {{tag}}
         <div class="wrapper">
             <Button >删除标签</Button>
         </div>
@@ -16,6 +16,7 @@
     import Vue from 'vue'
     import Notes from "@/components/Money/Notes.vue";
     import Button from "@/components/Button.vue"
+    import taglistModel from "@/models/taglistModel.ts"
     import{ Component }from 'vue-property-decorator';
    @Component({
   components: {
@@ -24,7 +25,24 @@
 })
 
     export default class Edit extends Vue{
-        con = this.$route.params.id
+        
+        tag?: {id: string;name: string}=undefined
+        created() {
+          const con = this.$route.params.id
+          taglistModel.fetch() 
+          const tags= taglistModel.data
+          const tag= tags.filter(t=>t.id===con)[0]
+          if(tag){
+              this.tag=tag
+              console.log('对象存在')
+          }else{
+              this.$router.replace('/404')
+          }
+        }
+        gg(val: {id: string;name: string}){
+        console.log(val+'woshishui')
+        
+      }
 
     }
 </script>
