@@ -17,12 +17,11 @@ import { Component, Prop,Watch } from "vue-property-decorator";
 export default class Notes extends Vue {
   // x?:{id:string,name:string}= window.localStorage.getItem(taglist)
   @Prop()  x!: string 
-   @Prop({required:true})  value!: string //一定是string
+   @Prop()  value!: string //一定是string
    @Prop()  bbb?: string //?可能不存在
     @Watch('x')
   onPersonChanged2(val: string) {
     console.log(this.x)
-    console.log( '12312'+val)
     this.$emit('update:value',val)
   }
   created() {

@@ -4,6 +4,7 @@
     <Layout>
       <Tags :datasource.sync="tags" @update:value="yyy"/>
       <Notes  @update:value ="nn"  :aaa="`在这里添加备注`" :bbb="`备注`"/>
+      {{tags}}
       <Types  :value.sync="record.type" />
       <NumberPad :value="record.output" @update:value ="gg" @submit="saverecord"/>
     </Layout>
@@ -20,15 +21,23 @@ import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component,Prop,Watch  } from'vue-property-decorator'
 import model from "@/models/recordModel.ts"
+import tagmodel from "@/models/taglistModel.ts"
+
 // const model= require('@/model.js').default
 
 const recordList = model.fetch()
+tagmodel.fetch()
+const tagList = tagmodel.data
 type Recorditem ={
   tagn: string[];
   note: string;
   type: string;
   output: number;
   time?: Date;
+}
+type Tag = {
+    id: string;
+    name: string;
 }
 @Component({
   components: {
@@ -40,7 +49,17 @@ type Recorditem ={
 })
 
 export default class Money extends Vue{
-      tags: string[]=['衣','食','住']
+      tags: Tag[]=tagList
+      // created(){
+      //   tagmodel.data=this.tags
+      //   tagmodel.save()
+      // }
+      @Watch('tags')
+  onChanged(val: string, oldVal: string) {
+     tagmodel.data=this.tags
+     tagmodel.save()
+    //  window.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
+}
       recordlist: Recorditem[]= recordList
       record: Recorditem={
         tagn:[],note:'',type:'+',output:10

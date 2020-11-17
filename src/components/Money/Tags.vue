@@ -5,11 +5,11 @@
       <li
         class="labii"
         v-for="lii in datasource"
-        :key="lii"
+        :key="lii.id"
         @click="toggle($event)"
-        :class="tag1.indexOf(lii)>= 0 ? 'selected' : ''"
+        :class="tag1.indexOf(lii.name)>= 0 ? 'selected' : ''"
       >
-        {{ lii }}
+        {{ lii.name }}
       </li>
     </ul>
   </div>
@@ -18,6 +18,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component,Prop } from'vue-property-decorator'
+import tagmodel from "@/models/taglistModel.ts"
+
 @Component
 export default class Tags extends Vue{
 
@@ -47,8 +49,13 @@ export default class Tags extends Vue{
         return
       }else{
         if(this.datasource){
-      this.$emit('update:datasource',[...this.datasource,name])
+          console.log(this.datasource+"woshinida");
+          console.log(JSON.stringify(this.datasource)+'wocao');
+          
+          
+      this.$emit('update:datasource',[...this.datasource,{id:window.localStorage.getItem('_key'),name:name}])
       }
+      
     }    
   
 }
