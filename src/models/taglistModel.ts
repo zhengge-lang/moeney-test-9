@@ -8,6 +8,8 @@ type TagList={
     fetch: () => Tag[];
     create: (name: string) => 'success'|'duplicated';//success成功，duplicated重复
     save: () => void;
+    update: (id: string,val: string) => 'success'|'not found'|'duplicated';
+    remove: (id: string) => void;
 }
 const model: TagList ={
     data:[],
@@ -18,6 +20,19 @@ const model: TagList ={
     },
     save(){
         window.localStorage.setItem(d,JSON.stringify(this.data))
+    },
+    update(id: string,val: string){
+        const j= this.data.map(i =>i.id )
+        console.log( '拉萨酱豆腐了'+j.indexOf(id))
+        if(j.indexOf(id)>=0){
+            console.log(j.indexOf(id)+'chengwei')
+            this.data[j.indexOf(id)].name=val
+            this.save()
+            return 'success'
+        }else{
+            return 'not found'
+        }
+        
     },
     // clone(data: string[]){
     //     return JSON.parse(JSON.stringify(data))
@@ -30,6 +45,14 @@ const model: TagList ={
         this.data.push({id:name,name:name})
         this.save()
         return 'success'
+    },
+    remove(id){
+        const names = this.data.map(i =>i.id)
+        if(names.indexOf(id)>=0){
+            this.data.splice(names.indexOf(id),1)
+            this.save()
+        } 
+
     }
 }
 export default model

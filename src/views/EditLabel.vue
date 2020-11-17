@@ -1,13 +1,13 @@
 <template>
     <Layout>
        <div class="edit"> 
-        <Icon class="ic" name="left"/>
+        <Icon class="ic" name="left" @click.native="goback"/>
         <span>编辑标签</span>
         </div>
-        <Notes :value="this.tag.name" :bbb="`标签名`"  @update:value ="gg"/>
+        <Notes :value="this.tag.name" :bbb="`标签名`"  @update:value ="updatetag"/>
         {{tag}}
         <div class="wrapper">
-            <Button >删除标签</Button>
+            <Button @click.native="remove(con2)">删除标签</Button>
         </div>
     </Layout>
 </template>
@@ -25,6 +25,7 @@
 })
 
     export default class Edit extends Vue{
+          con2 = this.$route.params.id
         
         tag?: {id: string;name: string}=undefined
         created() {
@@ -39,9 +40,18 @@
               this.$router.replace('/404')
           }
         }
-        gg(val: {id: string;name: string}){
-        console.log(val+'woshishui')
-        
+        updatetag(name: string){
+        console.log(name+'woshishui')
+        if(this.tag)
+        taglistModel.update(this.tag.id,name)
+      }
+      remove(e: string){
+          console.log(e);
+          
+          taglistModel.remove(e)
+      }
+      goback(){
+          this.$router.back()
       }
 
     }
