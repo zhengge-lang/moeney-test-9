@@ -6,10 +6,10 @@ type Tag = {
 type TagList={
     data: Tag[];
     fetch: () => Tag[];
-    create: (name: string) => 'success'|'duplicated';//success成功，duplicated重复
+    create: (name: string,id: string) => 'success'|'duplicated';//success成功，duplicated重复
     save: () => void;
     update: (id: string,val: string) => 'success'|'not found'|'duplicated';
-    remove: (id: string) => void;
+    remove: (id: string) => boolean;
 }
 const model: TagList ={
     data:[],
@@ -37,12 +37,12 @@ const model: TagList ={
     // clone(data: string[]){
     //     return JSON.parse(JSON.stringify(data))
     // },
-    create(name){
+    create(name,id){
         const names = this.data.map(item => item.name)
         console.log(this.data)
         console.log(names+'111')
         if(names.indexOf(name)>=0){return 'duplicated'}
-        this.data.push({id:name,name:name})
+        this.data.push({id:id,name:name})
         this.save()
         return 'success'
     },
@@ -52,6 +52,7 @@ const model: TagList ={
             this.data.splice(names.indexOf(id),1)
             this.save()
         } 
+        return true
 
     }
 }

@@ -19,7 +19,7 @@
     // import Nav from '@/components/Nav.vue'
   import model from "@/models/taglistModel.ts" 
   import Button from "@/components/Button.vue" 
-
+import idcreate from "@/lib/idcreator.ts"
 import {Component,Watch} from 'vue-property-decorator'
 import { extend } from 'vue/types/umd'
 
@@ -39,8 +39,9 @@ import { extend } from 'vue/types/umd'
         //  console.log(e+'222')
          const name = window.prompt('请输入标签名') as string
          if(name){
-           
-          const message= model.create(name)
+           const id =idcreate()
+           const ids: string =id.toString()
+          const message= model.create(name,ids)
           if(message === 'duplicated'){
             window.alert('重复')
           }else if(message === 'success'){

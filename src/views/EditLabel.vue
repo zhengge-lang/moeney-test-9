@@ -49,6 +49,13 @@
           console.log(e);
           
           taglistModel.remove(e)
+          if(taglistModel.remove(e)){
+
+              this.$router.back()
+          }else{
+              alert('删除失败')
+          }
+
       }
       goback(){
           this.$router.back()
