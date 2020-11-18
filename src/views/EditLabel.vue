@@ -30,8 +30,9 @@
         tag?: {id: string;name: string}=undefined
         created() {
           const con = this.$route.params.id
-          taglistModel.fetch() 
-          const tags= taglistModel.data
+        //   taglistModel.fetch() 
+        //   const tags= taglistModel.data
+        const tags = window.tagList
           const tag= tags.filter(t=>t.id===con)[0]
           if(tag){
               this.tag=tag
@@ -43,17 +44,18 @@
         updatetag(name: string){
         console.log(name+'woshishui')
         if(this.tag)
-        taglistModel.update(this.tag.id,name)
+        window.update(this.tag.id,name)
       }
       remove(e: string){
           console.log(e);
-          
-          taglistModel.remove(e)
-          if(taglistModel.remove(e)){
+          if(this.tag){
+         
+          if( window.removeTag(this.tag.id)){
 
               this.$router.back()
           }else{
               alert('删除失败')
+          }
           }
 
       }

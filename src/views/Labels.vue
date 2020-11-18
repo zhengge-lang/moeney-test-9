@@ -29,33 +29,14 @@ import { extend } from 'vue/types/umd'
   }
 })
    export default class Labels extends Vue{
-       data=model.data;  
-       beforeCreate() {
-         
-         model.fetch()
-       }
+       data = window.tagList
        submit(){
         //  alert('Hi')
         //  console.log(e+'222')
          const name = window.prompt('请输入标签名') as string
          if(name){
-           const id =idcreate()
-           const ids: string =id.toString()
-          const message= model.create(name,ids)
-          if(message === 'duplicated'){
-            window.alert('重复')
-          }else if(message === 'success'){
-            window.alert('成功')
-            
-          }
-          
+           window.createTag(name)
          }
-        //  if(this.data.indexOf(name)!==-1){
-        //    alert('命名重复')
-        //    return 
-        //  }else{
-        //  this.data.push(name)
-        //  }
        }
 
     }

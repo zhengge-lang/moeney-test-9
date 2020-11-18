@@ -19,6 +19,7 @@
 import Vue from 'vue'
 import { Component,Prop } from'vue-property-decorator'
 import tagmodel from "@/models/taglistModel.ts"
+import idcreate from "@/lib/idcreator.ts"
 
 @Component
 export default class Tags extends Vue{
@@ -51,9 +52,9 @@ export default class Tags extends Vue{
         if(this.datasource){
           console.log(this.datasource+"woshinida");
           console.log(JSON.stringify(this.datasource)+'wocao');
+        const id =idcreate()  
           
-          
-      this.$emit('update:datasource',[...this.datasource,{id:window.localStorage.getItem('_key'),name:name}])
+      this.$emit('update:datasource',[...this.datasource,{id:id.toString,name:name}])
       }
       
     }    

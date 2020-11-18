@@ -26,8 +26,9 @@ import tagmodel from "@/models/taglistModel.ts"
 // const model= require('@/model.js').default
 
 const recordList = model.fetch()
-tagmodel.fetch()
-const tagList = tagmodel.data
+// tagmodel.fetch()
+// const tagList = tagmodel.data
+const tagList = window.tagList
 type Recorditem ={
   tagn: string[];
   note: string;
@@ -49,7 +50,7 @@ type Tag = {
 })
 
 export default class Money extends Vue{
-      tags: Tag[]=tagList
+      tags: Tag[]=window.tagList
       // created(){
       //   tagmodel.data=this.tags
       //   tagmodel.save()

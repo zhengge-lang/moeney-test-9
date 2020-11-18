@@ -1,16 +1,5 @@
 const d= 'taglist'
-type Tag = {
-    id: string;
-    name: string;
-}
-type TagList={
-    data: Tag[];
-    fetch: () => Tag[];
-    create: (name: string,id: string) => 'success'|'duplicated';//success成功，duplicated重复
-    save: () => void;
-    update: (id: string,val: string) => 'success'|'not found'|'duplicated';
-    remove: (id: string) => boolean;
-}
+
 const model: TagList ={
     data:[],
     fetch(){
