@@ -68,8 +68,8 @@ export default class Money extends Vue{
         @Watch('recordlist')
   onChanged2(val: string, oldVal: string) {
     console.log(model)
-     model.save(this.recordlist)
-    //  window.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
+     model.save()
+    
 }
       yyy(tagc: string[]){
         this.record.tagn=tagc
@@ -84,10 +84,7 @@ export default class Money extends Vue{
         this.record.output =parseFloat(val)
       }
       saverecord(){
-        const record2: Recorditem =model.clone(this.record)
-        record2.time=new Date()
-        this.recordlist.push(record2)
-        console.log( this.recordlist)
+        model.create(this.record)
       }
 }
 </script>
