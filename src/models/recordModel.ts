@@ -18,6 +18,7 @@ const model ={
         const record2: Recorditem =clone(record)
         record2.time=new Date()
         this.data.push(record2)
+        this.save()
     }
 }
 export default model

@@ -29,4 +29,5 @@ declare interface Window {
   removeTag: (id: string) => boolean;
   update: (id: string,name: string) => 'success'|'not found'|'duplicated';
   recordlist: Recorditem[];
+  createRecord:(record:Recorditem) =>void
 }

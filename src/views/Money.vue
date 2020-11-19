@@ -51,6 +51,7 @@ type Tag = {
 
 export default class Money extends Vue{
       tags: Tag[]=window.tagList
+      recordList = window.recordlist
       // created(){
       //   tagmodel.data=this.tags
       //   tagmodel.save()
