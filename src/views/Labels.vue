@@ -22,6 +22,7 @@
 import idcreate from "@/lib/idcreator.ts"
 import {Component,Watch} from 'vue-property-decorator'
 import { extend } from 'vue/types/umd'
+import store from '@/store/index2' 
 
 @Component({
   components: {
@@ -29,13 +30,13 @@ import { extend } from 'vue/types/umd'
   }
 })
    export default class Labels extends Vue{
-       data = window.tagList
+       data = store.tagList
        submit(){
         //  alert('Hi')
         //  console.log(e+'222')
          const name = window.prompt('请输入标签名') as string
          if(name){
-           window.createTag(name)
+           store.createTag(name)
          }
        }
 

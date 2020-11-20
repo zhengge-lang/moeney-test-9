@@ -22,13 +22,14 @@ import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component,Prop,Watch  } from'vue-property-decorator'
 import model from "@/models/recordModel.ts"
 import tagmodel from "@/models/taglistModel.ts"
+import store from '@/store/index2'
 
 // const model= require('@/model.js').default
 
 const recordList = model.fetch()
 // tagmodel.fetch()
 // const tagList = tagmodel.data
-const tagList = window.tagList
+const tagList = store.tagList
 type Recorditem ={
   tagn: string[];
   note: string;
@@ -50,8 +51,8 @@ type Tag = {
 })
 
 export default class Money extends Vue{
-      tags: Tag[]=window.tagList
-      recordList = window.recordlist
+      tags: Tag[]=store.tagList
+      recordList = store.recordlist
       // created(){
       //   tagmodel.data=this.tags
       //   tagmodel.save()
@@ -60,7 +61,7 @@ export default class Money extends Vue{
   onChanged(val: string, oldVal: string) {
      tagmodel.data=this.tags
      tagmodel.save()
-    //  window.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
+    //  store.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
 }
       recordlist: Recorditem[]= recordList
       record: Recorditem={

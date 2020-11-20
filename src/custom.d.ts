@@ -24,10 +24,12 @@ interface window{
   tagList: Tag[];
 }
 declare interface Window {
+  store:{
   tagList: Tag[];
   createTag: (name: string) => void;
   removeTag: (id: string) => boolean;
   update: (id: string,name: string) => 'success'|'not found'|'duplicated';
   recordlist: Recorditem[];
   createRecord:(record:Recorditem) =>void
+}
 }

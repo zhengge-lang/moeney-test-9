@@ -18,6 +18,8 @@
     import Button from "@/components/Button.vue"
     import taglistModel from "@/models/taglistModel.ts"
     import{ Component }from 'vue-property-decorator';
+import store from '@/store/index2'
+
    @Component({
   components: {
     Notes,Button
@@ -32,7 +34,7 @@
           const con = this.$route.params.id
         //   taglistModel.fetch() 
         //   const tags= taglistModel.data
-        const tags = window.tagList
+        const tags = store.tagList
           const tag= tags.filter(t=>t.id===con)[0]
           if(tag){
               this.tag=tag
@@ -44,13 +46,13 @@
         updatetag(name: string){
         console.log(name+'woshishui')
         if(this.tag)
-        window.update(this.tag.id,name)
+        store.update(this.tag.id,name)
       }
       remove(e: string){
           console.log(e);
           if(this.tag){
          
-          if( window.removeTag(this.tag.id)){
+          if( store.removeTag(this.tag.id)){
 
               this.$router.back()
           }else{
