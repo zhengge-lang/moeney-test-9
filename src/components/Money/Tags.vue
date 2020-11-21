@@ -20,13 +20,14 @@ import Vue from 'vue'
 import { Component,Prop } from'vue-property-decorator'
 import tagmodel from "@/models/taglistModel.ts"
 import idcreate from "@/lib/idcreator.ts"
+import store from '@/store/index2'
 
 @Component
 export default class Tags extends Vue{
 
-      @Prop()
-  datasource: string[]|undefined
+  datasource=store.tagList
       tag1: []=[]
+      @Prop()
       i: 0|undefined
  
     toggle(e: MouseEvent) {
@@ -50,11 +51,9 @@ export default class Tags extends Vue{
         return
       }else{
         if(this.datasource){
-          console.log(this.datasource+"woshinida");
-          console.log(JSON.stringify(this.datasource)+'wocao');
-        const id =idcreate()  
           
-      this.$emit('update:datasource',[...this.datasource,{id:id.toString,name:name}])
+        const id =idcreate()  
+      store.createTag(name)
       }
       
     }    

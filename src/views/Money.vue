@@ -2,9 +2,9 @@
   <div>
     {{recordlist}}
     <Layout>
-      <Tags :datasource.sync="tags" @update:value="yyy"/>
-      <Notes  @update:value ="nn"  :aaa="`在这里添加备注`" :bbb="`备注`"/>
-      {{tags}}
+      <Tags />
+      <Notes  @update:value ="nn"  :aaa="`在这里添加备注`" :bbb="`备注1`"/>
+      
       <Types  :value.sync="record.type" />
       <NumberPad :value="record.output" @update:value ="gg" @submit="saverecord"/>
     </Layout>
@@ -51,18 +51,13 @@ type Tag = {
 })
 
 export default class Money extends Vue{
-      tags: Tag[]=store.tagList
+     
       recordList = store.recordlist
       // created(){
       //   tagmodel.data=this.tags
       //   tagmodel.save()
       // }
-      @Watch('tags')
-  onChanged(val: string, oldVal: string) {
-     tagmodel.data=this.tags
-     tagmodel.save()
-    //  store.localStorage.setItem('recordlist',JSON.stringify(this.recordlist))
-}
+ 
       recordlist: Recorditem[]= recordList
       record: Recorditem={
         tagn:[],note:'',type:'+',output:10
