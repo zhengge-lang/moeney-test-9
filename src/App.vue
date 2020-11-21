@@ -9,6 +9,16 @@
 
   </div>
 </template>
+<script>
+import store from '@/store/index2'
+export default {
+  data() {
+    return {
+      store:store
+    }
+  },
+}
+</script>
 
 <style lang="scss">
 @import "~@/assets/styles/helper.scss";

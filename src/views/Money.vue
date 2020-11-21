@@ -2,7 +2,9 @@
   <div>
     {{recordlist}}
     <Layout>
-      <Tags />
+      <Tags @update:value='yyy'/>
+      <button @click="add">+1</button>
+      {{count}}
       <Notes  @update:value ="nn"  :aaa="`在这里添加备注`" :bbb="`备注1`"/>
       
       <Types  :value.sync="record.type" />
@@ -47,17 +49,31 @@ type Tag = {
     Notes,
     Types,
     NumberPad,
-  }
+  },
+   computed: {
+        count(){
+       
+        return  store.count
+        },
+        recordList(){
+          return store.recordlist
+        }
+
+      }
 })
 
 export default class Money extends Vue{
-     
-      recordList = store.recordlist
+  store=store
+ 
       // created(){
-      //   tagmodel.data=this.tags
+        //   tagmodel.data=this.tags
       //   tagmodel.save()
       // }
- 
+      
+     add(){
+       console.log(store.count)
+       store.count++
+     }
       recordlist: Recorditem[]= recordList
       record: Recorditem={
         tagn:[],note:'',type:'+',output:10
