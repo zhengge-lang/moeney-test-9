@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{recordlist}}
+    {{recordList}}
     <Layout>
       <Tags @update:value='yyy'/>
       <button @click="add">+1</button>
@@ -25,10 +25,11 @@ import { Component,Prop,Watch  } from'vue-property-decorator'
 import model from "@/models/recordModel.ts"
 import tagmodel from "@/models/taglistModel.ts"
 import store from '@/store/index2'
+import store2 from '@/store/index'
 
 // const model= require('@/model.js').default
 
-const recordList = model.fetch()
+// const recordList = model.fetch()
 // tagmodel.fetch()
 // const tagList = tagmodel.data
 const tagList = store.tagList
@@ -56,35 +57,41 @@ type Tag = {
         return  store.count
         },
         recordList(){
-          return store.recordlist
+          return this.$store.state.recordlist
+        },
+        count1(){
+          return store2.state.count
         }
 
       }
 })
 
 export default class Money extends Vue{
-  store=store
+  // store=store
  
       // created(){
         //   tagmodel.data=this.tags
       //   tagmodel.save()
       // }
-      
+      created() {
+        console.log('222')
+       this.$store.commit('fetchRecord') 
+      }
      add(){
-       console.log(store.count)
+      //  store2.commit('increment',20)
        store.count++
      }
-      recordlist: Recorditem[]= recordList
+      recordlist: Recorditem[]=[]
       record: Recorditem={
         tagn:[],note:'',type:'+',output:10
       }
  
-        @Watch('recordlist')
-  onChanged2(val: string, oldVal: string) {
-    console.log(model)
-     model.save()
+//         @Watch('recordlist')
+//   onChanged2(val: string, oldVal: string) {
+//     console.log(model)
+//      model.save()
     
-}
+// }
       yyy(tagc: string[]){
         this.record.tagn=tagc
       }
@@ -98,7 +105,8 @@ export default class Money extends Vue{
         this.record.output =parseFloat(val)
       }
       saverecord(){
-        model.create(this.record)
+        // model.create(this.record)
+        this.$store.commit('createRecord',this.record)
       }
 }
 </script>

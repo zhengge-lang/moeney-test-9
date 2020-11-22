@@ -9,7 +9,7 @@ import tagStore from './tagStore'
       console.log( this.count)
     },
     //record store
-    ...recordStore,
+    // ...recordStore,
   
     //tag store
     ...tagStore
