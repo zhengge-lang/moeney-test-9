@@ -22,21 +22,28 @@
 import idcreate from "@/lib/idcreator.ts"
 import {Component,Watch} from 'vue-property-decorator'
 import { extend } from 'vue/types/umd'
-import store from '@/store/index2' 
+import store2 from '@/store/index' 
 
 @Component({
   components: {
    Button
-  }
+  },
+  computed: {
+    data(){
+      return this.$store.state.Taglist
+    }
+  },
 })
    export default class Labels extends Vue{
-       data = store.tagList
+     beforeCreate() {
+       this.$store.commit('fetchTag')
+     }
+      //  data = store2.state.Taglist
        submit(){
-        //  alert('Hi')
-        //  console.log(e+'222')
          const name = window.prompt('请输入标签名') as string
          if(name){
-           store.createTag(name)
+           //Todo
+           store2.commit( 'createTag',name)
          }
        }
 

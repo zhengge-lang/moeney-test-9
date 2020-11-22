@@ -1,3 +1,4 @@
+/* eslint-disable */
 import recordlistmodel from "@/models/recordModel.ts"
 
 export default {

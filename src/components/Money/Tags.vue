@@ -21,15 +21,28 @@ import { Component,Prop } from'vue-property-decorator'
 import tagmodel from "@/models/taglistModel.ts"
 import idcreate from "@/lib/idcreator.ts"
 import store from '@/store/index2'
+import store2 from '@/store/index'
 
-@Component
+@Component({
+   computed: {
+        
+        datasource(){
+          return store2.state.Taglist
+        },
+        count1(){
+          return store2.state.count
+        }
+
+      }
+})
 export default class Tags extends Vue{
 
-  datasource=store.tagList
       tag1: []=[]
       @Prop()
       i: 0|undefined
- 
+    created() {
+       this.$store.commit('fetchTag') 
+    }
     toggle(e: MouseEvent) {
       const button =(e.target as HTMLButtonElement);
       const input = button.innerText  as never;
@@ -50,11 +63,11 @@ export default class Tags extends Vue{
       }else if(name === ''||name === null){
         return
       }else{
-        if(this.datasource){
+        
           
         const id =idcreate()  
-      store.createTag(name)
-      }
+      store2.commit( 'createTag',name)
+      
       
     }    
   

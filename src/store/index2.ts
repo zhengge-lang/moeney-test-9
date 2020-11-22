@@ -1,3 +1,4 @@
+/* eslint-disable */
 import recordStore from './recordStore'
 import tagStore from './tagStore'
 
@@ -12,6 +13,6 @@ import tagStore from './tagStore'
     // ...recordStore,
   
     //tag store
-    ...tagStore
+    // ...tagStore
   }
   export default store

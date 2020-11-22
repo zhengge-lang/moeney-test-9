@@ -18,7 +18,7 @@
     import Button from "@/components/Button.vue"
     import taglistModel from "@/models/taglistModel.ts"
     import{ Component }from 'vue-property-decorator';
-import store from '@/store/index2'
+import store2 from '@/store/index'
 
    @Component({
   components: {
@@ -32,9 +32,9 @@ import store from '@/store/index2'
         tag?: {id: string;name: string}=undefined
         created() {
           const con = this.$route.params.id
-        //   taglistModel.fetch() 
-        //   const tags= taglistModel.data
-        const tags = store.tagList
+          // taglistModel.fetch() 
+          // const tags= taglistModel.data
+        const tags = store2.state.Taglist
           const tag= tags.filter(t=>t.id===con)[0]
           if(tag){
               this.tag=tag
@@ -45,19 +45,21 @@ import store from '@/store/index2'
         }
         updatetag(name: string){
         console.log(name+'woshishui')
-        if(this.tag)
-        store.update(this.tag.id,name)
+        // if(this.tag)
+        // store.update(this.tag.id,name)
       }
       remove(e: string){
-          console.log(e);
+          console.log(e+''+this.tag?.id);
           if(this.tag){
-         
-          if( store.removeTag(this.tag.id)){
+            store2.commit('removeTag',this.tag.id)
+            console.log('11');
+            // todo
+        //     if( true){
 
-              this.$router.back()
-          }else{
-              alert('删除失败')
-          }
+        //       this.$router.back()
+        //   }else{
+        //       alert('删除失败')
+        //   }
           }
 
       }

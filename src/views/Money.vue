@@ -32,7 +32,7 @@ import store2 from '@/store/index'
 // const recordList = model.fetch()
 // tagmodel.fetch()
 // const tagList = tagmodel.data
-const tagList = store.tagList
+const tagList = store2.state.Taglist
 type Recorditem ={
   tagn: string[];
   note: string;
