@@ -1,6 +1,6 @@
 <template>
   <div class="tags">
-    <a href="#" class="but" @click="create">新增标签</a>
+    <a href="#" class="but" @click="submit">新增标签</a>
     <ul class="current">
       <li
         class="labii"
@@ -22,6 +22,8 @@ import tagmodel from "@/models/taglistModel.ts"
 import idcreate from "@/lib/idcreator.ts"
 import store from '@/store/index2'
 import store2 from '@/store/index'
+import { mixins } from 'vue-class-component'
+import { TagHelper } from '@/mixins/TagHelper'
 
 @Component({
    computed: {
@@ -35,7 +37,7 @@ import store2 from '@/store/index'
 
       }
 })
-export default class Tags extends Vue{
+export default class Tags extends mixins(TagHelper){
 
       tag1: []=[]
       @Prop()
@@ -53,25 +55,7 @@ export default class Tags extends Vue{
       }
       this.$emit('update:value',this.tag1)
     }
-    create(){
-      
-      const name = window.prompt('请输入标签名') as string
-      console.log(name);
-      
-      if(name===''){
-        alert('标签名不能为空')
-      }else if(name === ''||name === null){
-        return
-      }else{
-        
-          
-        const id =idcreate()  
-      store2.commit( 'createTag',name)
-      
-      
-    }    
-  
-}
+   
 }
 </script>
 

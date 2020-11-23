@@ -21,6 +21,8 @@
   import Button from "@/components/Button.vue" 
 import idcreate from "@/lib/idcreator.ts"
 import {Component,Watch} from 'vue-property-decorator'
+import {mixins} from 'vue-class-component'
+import {TagHelper} from '@/mixins/TagHelper'
 import { extend } from 'vue/types/umd'
 import store2 from '@/store/index' 
 
@@ -28,24 +30,22 @@ import store2 from '@/store/index'
   components: {
    Button
   },
+  // mixins:[TagHelper],
   computed: {
     data(){
       return this.$store.state.Taglist
-    }
+    },
+   
   },
 })
-   export default class Labels extends Vue{
+   export default class Labels extends mixins(TagHelper){
      beforeCreate() {
        this.$store.commit('fetchTag')
      }
+    
+     
       //  data = store2.state.Taglist
-       submit(){
-         const name = window.prompt('请输入标签名') as string
-         if(name){
-           //Todo
-           store2.commit( 'createTag',name)
-         }
-       }
+      
 
     }
 </script>
