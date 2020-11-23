@@ -29,14 +29,19 @@ const store= new Vuex.Store({
     createTag(state,name)  {
       const id = idcreate()
       const ids: string = id.toString()
-      const message = model.create(name, ids)
-
-      if (message === 'duplicated') {
-        window.alert('重复')
-      } else if (message === 'success') {
+        const names = state.Taglist.map(item => item.name)
+        store.commit('fetchTag') 
+       
+        if(names.indexOf(name)>=0){ window.alert('重复')}
+        console.log(this.data);
+        
+        state.Taglist.push({id:ids,name:name});
+        console.log(this.data);
+        
+        store.commit('saveTags') 
+       
         window.alert('成功')
-  
-      }
+
     },
     removeTag (state,id) {
       model.remove(id)
@@ -45,8 +50,12 @@ const store= new Vuex.Store({
       } else {
         return false
       }
+    },
+    saveTags(state) {
+      window.localStorage.setItem('taglist', JSON.stringify(state.Taglist));
     }
   },
+
   actions: {
   },
   modules: {

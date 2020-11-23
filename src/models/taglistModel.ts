@@ -35,13 +35,13 @@ const model: TagList ={
         store2.commit('fetchTag') 
         console.log(this.data)
         console.log(names+'111')
+        store2.state.Taglist=this.data
         if(names.indexOf(name)>=0){return 'duplicated'}
         console.log(this.data);
         
         this.data.push({id:id,name:name});
         console.log(this.data);
         
-        // store2.state.Taglist=this.data
         // this.$store.commit('fetchTag') 
         this.save()
         return 'success'
