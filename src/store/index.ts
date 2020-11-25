@@ -46,13 +46,30 @@ const store= new Vuex.Store({
     removeTag (state,id) {
       model.remove(id)
       if (model.remove(id)) {
-        return true;
+        alert('删除成功')
       } else {
-        return false
+                      alert('删除失败')
+
       }
     },
     saveTags(state) {
       window.localStorage.setItem('taglist', JSON.stringify(state.Taglist));
+    },
+    updateTags (state,{id, name}) {
+      //  model.update(id, name)
+      
+        const j= state.Taglist.map(i =>i.id )
+        console.log( '拉萨酱豆腐了'+j.indexOf(id))
+        if(j.indexOf(id)>=0){
+            console.log(j.indexOf(id)+'chengwei')
+            state.Taglist[j.indexOf(id)].name=name
+            store.commit('saveTags')
+            return 'success'
+        }else{
+            return 'not found'
+        }
+        
+    
     }
   },
 

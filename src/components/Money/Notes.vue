@@ -4,7 +4,7 @@
       <!-- <span class="name" v-if="this.aaa">标签名</span> -->
       <span class="name" >{{bbb}}</span>
       <!-- <input type="text" :value="aaa" v-if="this.aaa" /> -->
-      <input type="text"  :placeholder="value" :x="x" @input="onPersonChanged2($event.target.value)" />
+      <input type="text"  :placeholder="this.placeholder"  :value="value" @input="onPersonChanged2($event.target.value)" />
       {{x}}
     </label>
   </div>
@@ -19,6 +19,7 @@ export default class Notes extends Vue {
   @Prop()  x!: string 
    @Prop()  value!: string //一定是string
    @Prop()  bbb?: string //?可能不存在
+    @Prop() placeholder?: string;
     @Watch('x')
   onPersonChanged2(val: string) {
     console.log(this.x)
