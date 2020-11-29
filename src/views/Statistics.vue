@@ -1,19 +1,39 @@
 <template>
     <div>
     <Layout>
-      <p>Statistics</p>
+            <Types class="x"  :value.sync="yyy" />
+
     </Layout>
   </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+import Vue from "vue";
+import  {Component} from'vue-property-decorator'
 
-    export default Vue.extend({
-        name: "Statistics",
-    })
+import Types from "@/components/Money/Types.vue"
+@Component({
+
+  components:{
+    Types}
+})
+export default class Statistics extends Vue{
+      yyy='-'
+    }
 </script>
 
-<style scoped>
 
+<style lang="scss" scoped>
+  .x ::v-deep li{
+    background:white;
+    
+   &.selected2{
+    background: #c4c4c4;
+
+    &::after{
+    display: none;
+
+    }
+    }
+  }
 </style>

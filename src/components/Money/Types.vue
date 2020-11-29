@@ -20,6 +20,8 @@ export default class Types extends Vue {
   
  
   ctype(e: string){
+    console.log(e);
+    
           if(e!=='-'&&e!=='+'){
             throw new Error('type is unknown')
           }
