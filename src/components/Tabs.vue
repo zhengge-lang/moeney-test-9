@@ -1,36 +1,40 @@
 <template>
     <div>
         <ul class="types">
-          <li  
-              :class="{selected2:value==='-',[classPrefix+'-item']:classPrefix}"
-          @click="ctype('-')">支出</li>
-          <li   :class="{selected2:value==='+',[classPrefix+'-item']:classPrefix}" @click="ctype('+')">收入</li>
+          <li v-for="item in dataSource" :key="item.value" :class="liclass(item)" @click="selectd(item.value)">{{item.text}}</li>
         </ul>
       </div>
 </template>
 
 
 <script lang="ts">
+type name1={
+    text: string;value: string;
+}
 import Vue from 'vue'
 import {  Component, Prop } from 'vue-property-decorator'
 @Component
 
-export default class Types extends Vue {
-  @Prop(String) classPrefix?: string
+export default class Tabs extends Vue {
+     @Prop(String) classPrefix?: string
   
-    @Prop(String)  value!: string 
-  
-  
- 
-  ctype(e: string){
-    console.log(e);
-    
-          if(e!=='-'&&e!=='+'){
-            throw new Error('type is unknown')
-          }
-          this.$emit('update:value',e)
+    // @Prop(String)  value!: string 
+    @Prop()  
+    value!: string
+    @Prop({required:true,type:Array})  dataSource!: name1[] 
+    created() {
+     console.log(this.value);
+        
+    }
+    liclass=(item: name1)=>{
+        return{
+        selected2:this.value===item.value,[this.classPrefix+'-item']:this.classPrefix}
         }
-  
+    selectd(e: string){
+        console.log(e,this.value);
+        
+        this.$emit('update:value',e)
+    }
 }
 </script>
  
@@ -59,5 +63,6 @@ export default class Types extends Vue {
     width: 100%;
     background: #333;
   }
+  
 }
 </style>

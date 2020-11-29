@@ -11,6 +11,9 @@ type Recorditem ={
     id: string;
     name: string;
 }
+type name1={
+  text:string,value:string
+}
 type TagList={
     data: Tag[];
     fetch: () => Tag[];
