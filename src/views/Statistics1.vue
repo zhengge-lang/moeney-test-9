@@ -56,7 +56,7 @@ export default class Statistics extends Vue{
         store.commit('fetchRecord')
         store.state.recordlist.forEach((i)=>{
           this.oldday=JSON.stringify(i.time).slice(1,11) ;
-          console.log(JSON.stringify(i));
+          console.log(JSON.stringify(i.output));
           this.total+=i.output
           console.log(this.nowday);
           console.log(this.oldday);
