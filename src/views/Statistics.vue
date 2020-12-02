@@ -2,20 +2,25 @@
     <div>
     <Layout>
             <!-- <Types class="x" class-prefix="qwe" :value.sync="yyy" /> -->
-            <Tabs class="x" class-prefix="type"  :dataSource="recordtypeList" :value.sync="yyy"/>
-        <Tabs class="y" class-prefix="interval"  :dataSource="intervalList" :value.sync="day1"/>
+            <Tabs class="x" class-prefix="type"  :dataSource="recordtypeList" :value.sync="type"/>
+        <Tabs class="y" class-prefix="interval"  :dataSource="intervalList" :value.sync="interval"/>
         <div class="hang" >
-          <span>{{showtime}}</span>
-          <span>{{total}}</span>
+         
 
         </div>
-        <div class="lei" v-for="item in recordlist" :key="item.output">
-         
-          <span v-for="it in item.tagn" :key="it">{{it}}</span>
+        <ol>
+        <li class="lei" v-for="(group,index) in result" :key="index">
+         <h3 class="title">{{group.title}}</h3>
+         <ol>
+          <li class="record" v-for="item in group.items" :key="item.id">
+            <span>{{tagString( item.tagn)}}</span>
           <span class="b">{{item.note}}</span>
-          <span>{{item.output}}</span>
-          
-        </div>
+          <span>￥{{item.output}} </span>
+            </li>
+            </ol>
+        </li>
+        </ol>
+        {{result}}
     </Layout>
   </div>
 </template>
@@ -34,8 +39,8 @@ import store from "@/store/index"
     Types,Tabs}
 })
 export default class Statistics extends Vue{
-      yyy='-'
-      day1='day'
+      type='-'
+      interval='day'
       showtime=''
       total=0
       nowday=new Date
@@ -44,53 +49,41 @@ export default class Statistics extends Vue{
 
       intervalList=intervalList
       recordtypeList=recordtypeList
-      recordlist=store.state.recordlist
-      mounted() {
-        
-     
-        
-        
-        this.nowday1=this.nowday.toString().slice(11,15)+'-'+this.nowday.toString().slice(16,18)+'-'+this.nowday.toString().slice(8,10)
-        
-        
-        store.commit('fetchRecord')
-        store.state.recordlist.forEach((i)=>{
-          this.oldday=JSON.stringify(i.time).slice(1,11) ;
-          console.log(JSON.stringify(i));
-          this.total+=i.output
-          console.log(this.nowday);
-          console.log(this.oldday);
-          
-          
-          console.log(this.nowday1==this.oldday);
-          
-        })
-        if(this.oldday)
-        if(this.nowday1>this.oldday){
-          this.showtime='昨天'
-        }else if(this.nowday1==this.oldday){
-          this.showtime='今天'
-        }
+      tagString(tags: Tag[]){
+        return tags.length===0?'wu':tags.join(',')
+      }
+      get recordlist(){
+        return store.state.recordlist
       }
       
-      created() {
+      get result(){
+        type Items=Recorditem[]
+        type HashTableValue = {title: string;items: Items}
+        const hashTable: {[key: string]: HashTableValue}={}
+        for(let i=0;i<this.recordlist.length;i++){
+        //  let date=JSON.stringify(this.recordlist[i].time).slice(1,11)
+            console.log(    JSON.stringify(this.recordlist[i].time).split('T')+'woshi1');
+         const [date1,time1]=this.recordlist[i].time!.split('T')
+         hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
+         hashTable[date1].items.push(this.recordlist[i] )
+         console.log(JSON.stringify( hashTable)+'woshi222');
+         
+        }
+        return hashTable;
+      }
+      //  hashTable:[{title:string,items:[]}]=[]
+      mounted() {
         
-     
         
-        
+
         this.nowday1=this.nowday.toString().slice(11,15)+'-'+this.nowday.toString().slice(16,18)+'-'+this.nowday.toString().slice(8,10)
         
         
         store.commit('fetchRecord')
-        store.state.recordlist.forEach((i)=>{
+        this.recordlist.forEach((i)=>{
           this.oldday=JSON.stringify(i.time).slice(1,11) ;
-          console.log(JSON.stringify(i.output));
           this.total+=i.output
-          console.log(this.nowday);
-          console.log(this.oldday);
-          
-          
-          console.log(this.nowday1==this.oldday);
+         
           
         })
         if(this.oldday)
@@ -100,6 +93,11 @@ export default class Statistics extends Vue{
           this.showtime='今天'
         }
       }
+      beforeCreate() {
+        store.commit('fetchRecord')
+        
+      }
+      
       // array=[{text:'按天',value:'day'},{text:'按周',value:'week'},{text:'按月',value:'month'}]
       // array2=[{text:'收入',value:'-'},{text:'支出',value:'+'}]
     }
@@ -107,6 +105,13 @@ export default class Statistics extends Vue{
 
 
 <style lang="scss" scoped>
+%item{
+  padding:8px 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
   .x ::v-deep .type-item {
     background:white;
     
@@ -127,22 +132,31 @@ export default class Statistics extends Vue{
     font-size: 17px;
     background: #E5E5E5;
   }
-  .hang{
-    padding:10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .lei{
-    padding:10px;
-     display: flex;
-    justify-content: space-between;
-    background: rgb(250, 247, 247);
+  // .hang{
+  //   padding:10px;
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
+  // .lei{
+  //   //  display: flex;
+  //   // justify-content: space-between;
+  //   background: rgb(250, 247, 247);
       span{
-         background: rgb(250, 247, 247);
+         background: white
       }
     .b{
-      margin-right: 171px;
+      margin-right: auto;
+      margin-left: 16px;
+      color: #999;
     }
+  // }
+  .title{
+    @extend %item
+
+  }
+  .record{
+    background: white;
+    @extend %item
   }
 
 </style>

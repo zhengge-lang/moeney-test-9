@@ -16,7 +16,7 @@ const model ={
     },
     create(record: Recorditem){
         const record2: Recorditem =clone(record)
-        record2.time=new Date()
+        record2.time=new Date().toISOString()
         this.data.push(record2)
         this.save()
     }

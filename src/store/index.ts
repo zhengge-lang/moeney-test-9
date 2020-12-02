@@ -21,7 +21,13 @@ const store= new Vuex.Store({
       state.recordlist=JSON.parse(window.localStorage.getItem( 'recordlist') || '[]');
     },
     createRecord(state,record)  {
-      recordlistmodel.create(record)
+      // recordlistmodel.create(record)
+      
+        const record2: Recorditem =recordlistmodel.clone(record)
+        record2.time=new Date().toISOString()
+        state.recordlist.push(record2)
+        window.localStorage.setItem('recordlist',JSON.stringify(state.recordlist))
+   
     },
     fetchTag(state,record){
       state.Taglist=JSON.parse(window.localStorage.getItem( 'taglist') || '[]');

@@ -4,7 +4,7 @@ type Recorditem ={
     note: string;
     type: string;
     output: number;
-    time?: Date;
+    time?: string;
   }
  
   type Tag = {
