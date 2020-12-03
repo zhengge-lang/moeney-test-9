@@ -96,7 +96,13 @@ export default class Statistics extends Vue{
         //  let date=JSON.stringify(this.recordlist[i].time).slice(1,11)
             // console.log(    JSON.stringify(this.recordlist[i].time).split('T')+'woshi1');
          const [date1,time1]=this.recordlist[i].time!.split('T')
+         console.log(date1+'woshishui');
+         console.log(hashTable[date1]+'woshishui+111');
+
+         
          hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
+         console.log(JSON.stringify( hashTable[date1])+'woshishui+222');
+
          hashTable[date1].items.push(this.recordlist[i] )
         //  console.log(JSON.stringify( hashTable)+'woshi222');
          
