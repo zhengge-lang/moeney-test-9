@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{recordList}}
+    <!-- {{recordList}} -->
     <Layout>
       <Tags @update:value='yyy'/>
       <button @click="add">+1</button>

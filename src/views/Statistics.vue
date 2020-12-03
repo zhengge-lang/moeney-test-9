@@ -10,7 +10,7 @@
         </div>
         <ol>
         <li class="lei" v-for="(group,index) in result" :key="index">
-         <h3 class="title">{{group.title}}</h3>
+         <h3 class="title">{{check(group.title)}}</h3>
          <ol>
           <li class="record" v-for="item in group.items" :key="item.id">
             <span>{{tagString( item.tagn)}}</span>
@@ -20,7 +20,7 @@
             </ol>
         </li>
         </ol>
-        {{result}}
+        
     </Layout>
   </div>
 </template>
@@ -33,6 +33,7 @@ import Tabs from "@/components/Tabs.vue"
 import intervalList from "@/constants/intervaList"
 import recordtypeList from "@/constants/recordList"
 import store from "@/store/index"
+import dayjs from 'dayjs'
 @Component({
 
   components:{
@@ -52,6 +53,37 @@ export default class Statistics extends Vue{
       tagString(tags: Tag[]){
         return tags.length===0?'wu':tags.join(',')
       }
+      check(date: string){
+        const time= new Date(date);
+        // console.log(new Date(Date.parse(date)));
+        const api =dayjs(date)
+        
+        // const y=time.getFullYear();
+        // const m = time.getMonth();
+        // const dd = time.getDate();
+        const now = new Date();
+        const now1 = dayjs();
+        
+        if(api.isSame(now,'day')){
+          return '今天'
+        }else if(api.isSame(now.valueOf()-24*3600*1000,'day')){
+          return '昨天'
+        }else if(api.isSame(now1.subtract(2,'day'),'day')){
+          return '前天'
+        }
+        else {
+          
+          const timeyear=api.isSame(now,'year')?api.format('MM月DD日'):api.format('YYYY年MM月DD日')
+          return timeyear
+        }
+        
+        // if(now.getFullYear()===y&&now.getMonth()===m&&now.getDate()===dd){
+        //   return '今天'
+        // }else{
+        //   return date
+        // }
+
+      }
       get recordlist(){
         return store.state.recordlist
       }
@@ -62,11 +94,11 @@ export default class Statistics extends Vue{
         const hashTable: {[key: string]: HashTableValue}={}
         for(let i=0;i<this.recordlist.length;i++){
         //  let date=JSON.stringify(this.recordlist[i].time).slice(1,11)
-            console.log(    JSON.stringify(this.recordlist[i].time).split('T')+'woshi1');
+            // console.log(    JSON.stringify(this.recordlist[i].time).split('T')+'woshi1');
          const [date1,time1]=this.recordlist[i].time!.split('T')
          hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
          hashTable[date1].items.push(this.recordlist[i] )
-         console.log(JSON.stringify( hashTable)+'woshi222');
+        //  console.log(JSON.stringify( hashTable)+'woshi222');
          
         }
         return hashTable;
