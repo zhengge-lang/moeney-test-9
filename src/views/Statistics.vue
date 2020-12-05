@@ -34,6 +34,7 @@ import intervalList from "@/constants/intervaList"
 import recordtypeList from "@/constants/recordList"
 import store from "@/store/index"
 import dayjs from 'dayjs'
+import clone from '@/lib/clone'
 @Component({
 
   components:{
@@ -91,23 +92,26 @@ export default class Statistics extends Vue{
       get result(){
         type Items=Recorditem[]
         type HashTableValue = {title: string;items: Items}
-        const hashTable: {[key: string]: HashTableValue}={}
-        for(let i=0;i<this.recordlist.length;i++){
-        //  let date=JSON.stringify(this.recordlist[i].time).slice(1,11)
-            // console.log(    JSON.stringify(this.recordlist[i].time).split('T')+'woshi1');
-         const [date1,time1]=this.recordlist[i].time!.split('T')
-         console.log(date1+'woshishui');
-         console.log(hashTable[date1]+'woshishui+111');
-
-         
-         hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
-         console.log(JSON.stringify( hashTable[date1])+'woshishui+222');
-
-         hashTable[date1].items.push(this.recordlist[i] )
-        //  console.log(JSON.stringify( hashTable)+'woshi222');
-         
+        // const hashTable: HashTableValue[]
+        // console.log(this.recordlist.map(i=>i.time));
+        if(this.recordlist.length===0){return []}
+        const newlist = this.recordlist.sort((a,b)=>dayjs(b.time).valueOf()-dayjs(a.time).valueOf())
+        // console.log(newlist);
+        const x = [{title:dayjs(newlist[0].time).format('YYYY-MM-DD'),items:[this.recordlist[0]]}]
+        for(let i= 1;i<newlist.length;i++){
+          const current=newlist[i];
         }
-        return hashTable;
+        console.log(x);
+        
+        return []
+        // for(let i=0;i<this.recordlist.length;i++){
+
+        //  const [date1,time1]=this.recordlist[i].time!.split('T')
+        //  hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
+        //  hashTable[date1].items.push(this.recordlist[i] )
+      
+        // }
+        // return hashTable;
       }
       //  hashTable:[{title:string,items:[]}]=[]
       mounted() {
