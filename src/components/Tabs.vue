@@ -31,7 +31,7 @@ export default class Tabs extends Vue {
         selected2:this.value===item.value,[this.classPrefix+'-item']:this.classPrefix}
         }
     selectd(e: string){
-        console.log(e,this.value);
+        console.log(e,this.value+'1111');
         
         this.$emit('update:value',e)
     }

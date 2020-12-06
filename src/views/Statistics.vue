@@ -94,16 +94,39 @@ export default class Statistics extends Vue{
         type HashTableValue = {title: string;items: Items}
         // const hashTable: HashTableValue[]
         // console.log(this.recordlist.map(i=>i.time));
+        let recordx: Recorditem[]
         if(this.recordlist.length===0){return []}
+        this.recordlist.filter(r=>{
+        
+        
+          if(r.type==this.type)
+          console.log('haohaohaho')
+          }
+        )
+        console.log(this.type+'123123123');
+        
+        
         const newlist = this.recordlist.sort((a,b)=>dayjs(b.time).valueOf()-dayjs(a.time).valueOf())
         // console.log(newlist);
         const x = [{title:dayjs(newlist[0].time).format('YYYY-MM-DD'),items:[this.recordlist[0]]}]
-        for(let i= 1;i<newlist.length;i++){
+        for(let i= 1;i<newlist.length-1;i++){
           const current=newlist[i];
+          const current1 = newlist[i+1]
+          // console.log(dayjs(current.time).isSame(dayjs(current1.time),'day'));
+          // console.log(current);
+          
+            let c=0
+          if(dayjs(current.time).isSame(dayjs(current1.time),'day')){
+            
+            x[c].items.push(current)
+          }else{
+            c=c+1;
+            x.push({title:dayjs(current1.time).format('YYYY-MM-DD'),items:[current1]})
+          }
         }
-        console.log(x);
+        // console.log(x);
         
-        return []
+        return x
         // for(let i=0;i<this.recordlist.length;i++){
 
         //  const [date1,time1]=this.recordlist[i].time!.split('T')
