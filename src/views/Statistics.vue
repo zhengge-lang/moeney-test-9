@@ -1,227 +1,240 @@
 <template>
-    <div>
+  <div>
     <Layout>
-            <!-- <Types class="x" class-prefix="qwe" :value.sync="yyy" /> -->
-            <Tabs class="x" class-prefix="type"  :dataSource="recordtypeList" :value.sync="type"/>
-        <Tabs class="y" class-prefix="interval"  :dataSource="intervalList" :value.sync="interval"/>
-        <div class="hang" >
-         
-
-        </div>
-        <ol>
-        <li class="lei" v-for="(group,index) in result" :key="index">
-         <h3 class="title">{{check(group.title)}}</h3>
-         <ol>
-          <li class="record" v-for="item in group.items" :key="item.id">
-            <span>{{tagString( item.tagn)}}</span>
-          <span class="b">{{item.note}}</span>
-          <span>￥{{item.output}} </span>
+      <!-- <Types class="x" class-prefix="qwe" :value.sync="yyy" /> -->
+      <Tabs
+        class="x"
+        class-prefix="type"
+        :dataSource="recordtypeList"
+        :value.sync="type"
+      />
+      <Tabs
+        class="y"
+        class-prefix="interval"
+        :dataSource="intervalList"
+        :value.sync="interval"
+      />
+      <div class="hang"></div>
+      <ol>
+        <li class="lei" v-for="(group, index) in result" :key="index">
+          <h3 class="title">{{ check(group.title) }}</h3>
+          <ol>
+            <li class="record" v-for="item in group.items" :key="item.id">
+              <span>{{ tagString(item.tagn) }}</span>
+              <span class="b">{{ item.note }}</span>
+              <span>￥{{ item.output }} </span>
             </li>
-            </ol>
+          </ol>
         </li>
-        </ol>
-        
+      </ol>
     </Layout>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import  {Component} from'vue-property-decorator'
-import Types from "@/components/Money/Types.vue"
-import Tabs from "@/components/Tabs.vue"
-import intervalList from "@/constants/intervaList"
-import recordtypeList from "@/constants/recordList"
-import store from "@/store/index"
-import dayjs from 'dayjs'
-import clone from '@/lib/clone'
+import { Component } from "vue-property-decorator";
+import Types from "@/components/Money/Types.vue";
+import Tabs from "@/components/Tabs.vue";
+import intervalList from "@/constants/intervaList";
+import recordtypeList from "@/constants/recordList";
+import store from "@/store/index";
+import dayjs from "dayjs";
+import clone from "@/lib/clone";
 @Component({
-
-  components:{
-    Types,Tabs}
+  components: {
+    Types,
+    Tabs,
+  },
 })
-export default class Statistics extends Vue{
-      type='-'
-      interval='day'
-      showtime=''
-      total=0
-      nowday=new Date
-      nowday1?: string=undefined
-      oldday?: string=undefined
+export default class Statistics extends Vue {
+  type = "+";
+  interval = "day";
+  showtime = "";
+  total = 0;
+  nowday = new Date();
+  nowday1?: string = undefined;
+  oldday?: string = undefined;
+  x={}
+  intervalList = intervalList;
+  recordtypeList = recordtypeList;
+  tagString(tags: Tag[]) {
+    return tags.length === 0 ? "wu" : tags.join(",");
+  }
+  check(date: string) {
+    const time = new Date(date);
+    // console.log(date);
+    const api = dayjs(date);
 
-      intervalList=intervalList
-      recordtypeList=recordtypeList
-      tagString(tags: Tag[]){
-        return tags.length===0?'wu':tags.join(',')
-      }
-      check(date: string){
-        const time= new Date(date);
-        // console.log(new Date(Date.parse(date)));
-        const api =dayjs(date)
-        
-        // const y=time.getFullYear();
-        // const m = time.getMonth();
-        // const dd = time.getDate();
-        const now = new Date();
-        const now1 = dayjs();
-        
-        if(api.isSame(now,'day')){
-          return '今天'
-        }else if(api.isSame(now.valueOf()-24*3600*1000,'day')){
-          return '昨天'
-        }else if(api.isSame(now1.subtract(2,'day'),'day')){
-          return '前天'
-        }
-        else {
-          
-          const timeyear=api.isSame(now,'year')?api.format('MM月DD日'):api.format('YYYY年MM月DD日')
-          return timeyear
-        }
-        
-        // if(now.getFullYear()===y&&now.getMonth()===m&&now.getDate()===dd){
-        //   return '今天'
-        // }else{
-        //   return date
-        // }
+    const now = new Date();
+    const now1 = dayjs();
 
-      }
-      get recordlist(){
-        return store.state.recordlist
-      }
-      
-      get result(){
-        type Items=Recorditem[]
-        type HashTableValue = {title: string;items: Items}
-        // const hashTable: HashTableValue[]
-        // console.log(this.recordlist.map(i=>i.time));
-        let recordx: Recorditem[]
-        if(this.recordlist.length===0){return []}
-        this.recordlist.filter(r=>{
-        
-        
-          if(r.type==this.type)
-          console.log('haohaohaho')
-          }
-        )
-        console.log(this.type+'123123123');
-        
-        
-        const newlist = this.recordlist.sort((a,b)=>dayjs(b.time).valueOf()-dayjs(a.time).valueOf())
-        // console.log(newlist);
-        const x = [{title:dayjs(newlist[0].time).format('YYYY-MM-DD'),items:[this.recordlist[0]]}]
-        for(let i= 1;i<newlist.length-1;i++){
-          const current=newlist[i];
-          const current1 = newlist[i+1]
-          // console.log(dayjs(current.time).isSame(dayjs(current1.time),'day'));
-          // console.log(current);
-          
-            let c=0
-          if(dayjs(current.time).isSame(dayjs(current1.time),'day')){
-            
-            x[c].items.push(current)
-          }else{
-            c=c+1;
-            x.push({title:dayjs(current1.time).format('YYYY-MM-DD'),items:[current1]})
-          }
-        }
-        // console.log(x);
-        
-        return x
-        // for(let i=0;i<this.recordlist.length;i++){
-
-        //  const [date1,time1]=this.recordlist[i].time!.split('T')
-        //  hashTable[date1]= hashTable[date1]||{title:date1,items:[]}
-        //  hashTable[date1].items.push(this.recordlist[i] )
-      
-        // }
-        // return hashTable;
-      }
-      //  hashTable:[{title:string,items:[]}]=[]
-      mounted() {
-        
-        
-
-        this.nowday1=this.nowday.toString().slice(11,15)+'-'+this.nowday.toString().slice(16,18)+'-'+this.nowday.toString().slice(8,10)
-        
-        
-        store.commit('fetchRecord')
-        this.recordlist.forEach((i)=>{
-          this.oldday=JSON.stringify(i.time).slice(1,11) ;
-          this.total+=i.output
-         
-          
-        })
-        if(this.oldday)
-        if(this.nowday1>this.oldday){
-          this.showtime='昨天'
-        }else if(this.nowday1==this.oldday){
-          this.showtime='今天'
-        }
-      }
-      beforeCreate() {
-        store.commit('fetchRecord')
-        
-      }
-      
-      // array=[{text:'按天',value:'day'},{text:'按周',value:'week'},{text:'按月',value:'month'}]
-      // array2=[{text:'收入',value:'-'},{text:'支出',value:'+'}]
+    if (api.isSame(now, "day")) {
+      return "今天";
+    } else if (api.isSame(now.valueOf() - 24 * 3600 * 1000, "day")) {
+      return "昨天";
+    } else if (api.isSame(now1.subtract(2, "day"), "day")) {
+      return "前天";
+    } else {
+      const timeyear = api.isSame(now, "year")
+        ? api.format("MM月DD日")
+        : api.format("YYYY年MM月DD日");
+      return timeyear;
     }
+
+
+  }
+  get recordlist() {
+    return store.state.recordlist;
+  }
+
+  get result() {
+    type Items = Recorditem[];
+    type HashTableValue = { title: string; items: Items };
+
+    if (this.recordlist.length === 0) {
+      return [];
+    }
+    const newlist = this.recordlist.sort(
+      (a, b) => dayjs(b.time).valueOf() - dayjs(a.time).valueOf()
+    );
+
+    let j = 0;
+    console.log(j);
+
+    if (this.type === this.recordlist[j].type) {
+      const x = [
+        {
+          title: dayjs(newlist[j].time).format("YYYY-MM-DD"),
+          items: [this.recordlist[j]],
+        },
+      ];
+      console.log(JSON.stringify(x) + "000000");
+
+      let c = 0;
+      newlist
+        .filter((r) => r.type == this.type)
+        .sort(function (a, b) {
+          if (dayjs(a.time).isSame(dayjs(b.time), "day")) {
+            x[c].items.push(a);
+          } else {
+            c = c + 1;
+            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"), items: [a] });
+          }
+          return dayjs(b.time).valueOf() - dayjs(a.time).valueOf();
+        });
+      this.x=x
+      // return x;
+    }
+    while (this.type !== this.recordlist[j].type) {
+
+      j = j + 1;
+      if (this.type === this.recordlist[j].type) {
+        const x = [
+          {
+            title: dayjs(newlist[j].time).format("YYYY-MM-DD"),
+            items: [this.recordlist[j]],
+          },
+        ];
+
+        let c = 0;
+      newlist
+        .filter((r) => r.type == this.type)
+        .sort(function (a, b) {
+          if (dayjs(a.time).isSame(dayjs(b.time), "day")) {
+            x[c].items.push(a);
+          } else {
+            c = c + 1;
+            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"), items: [a] });
+          }
+          return dayjs(b.time).valueOf() - dayjs(a.time).valueOf();
+        });
+
+      // return x;
+      this.x=x
+      }
+    }
+    return this.x
+  }
+  mounted() {
+    this.nowday1 =
+      this.nowday.toString().slice(11, 15) +
+      "-" +
+      this.nowday.toString().slice(16, 18) +
+      "-" +
+      this.nowday.toString().slice(8, 10);
+
+    store.commit("fetchRecord");
+    this.recordlist.forEach((i) => {
+      this.oldday = JSON.stringify(i.time).slice(1, 11);
+      this.total += i.output;
+    });
+    if (this.oldday)
+      if (this.nowday1 > this.oldday) {
+        this.showtime = "昨天";
+      } else if (this.nowday1 == this.oldday) {
+        this.showtime = "今天";
+      }
+  }
+  beforeCreate() {
+    store.commit("fetchRecord");
+  }
+
+
+}
 </script>
 
 
 <style lang="scss" scoped>
-%item{
-  padding:8px 16px;
+%item {
+  padding: 8px 16px;
   line-height: 24px;
   display: flex;
   justify-content: space-between;
   align-content: center;
 }
-  .x ::v-deep .type-item {
-    background:white;
-    
-   &.selected2{
+.x ::v-deep .type-item {
+  background: white;
+
+  &.selected2 {
     background: #c4c4c4;
 
-    &::after{
-    display: none;
-
-    }
+    &::after {
+      display: none;
     }
   }
-  .y ::v-deep li.interval-item{
-    min-height: 40px;
-    line-height: 40px;
-  }
-  *{
-    font-size: 17px;
-    background: #E5E5E5;
-  }
-  // .hang{
-  //   padding:10px;
-  //   display: flex;
-  //   justify-content: space-between;
-  // }
-  // .lei{
-  //   //  display: flex;
-  //   // justify-content: space-between;
-  //   background: rgb(250, 247, 247);
-      span{
-         background: white
-      }
-    .b{
-      margin-right: auto;
-      margin-left: 16px;
-      color: #999;
-    }
-  // }
-  .title{
-    @extend %item
-
-  }
-  .record{
-    background: white;
-    @extend %item
-  }
-
+}
+.y ::v-deep li.interval-item {
+  min-height: 40px;
+  line-height: 40px;
+}
+* {
+  font-size: 17px;
+  background: #e5e5e5;
+}
+// .hang{
+//   padding:10px;
+//   display: flex;
+//   justify-content: space-between;
+// }
+// .lei{
+//   //  display: flex;
+//   // justify-content: space-between;
+//   background: rgb(250, 247, 247);
+span {
+  background: white;
+}
+.b {
+  margin-right: auto;
+  margin-left: 16px;
+  color: #999;
+}
+// }
+.title {
+  @extend %item;
+}
+.record {
+  background: white;
+  @extend %item;
+}
 </style>
