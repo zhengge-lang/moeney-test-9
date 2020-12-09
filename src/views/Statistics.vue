@@ -17,7 +17,8 @@
       <div class="hang"></div>
       <ol>
         <li class="lei" v-for="(group, index) in result" :key="index">
-          <h3 class="title">{{ check(group.title) }}</h3>
+        
+          <h3 class="title">{{ check(group.title) }} <span style="text-align:right;background:#e5e5e5">{{group.total}}</span></h3>
           <ol>
             <li class="record" v-for="item in group.items" :key="item.id">
               <span>{{ tagString(item.tagn) }}</span>
@@ -91,7 +92,7 @@ export default class Statistics extends Vue {
   get result() {
     type Items = Recorditem[];
     type HashTableValue = { title: string; items: Items };
-
+    // type x={title:string,total:number,i}
     if (this.recordlist.length === 0) {
       return [];
     }
@@ -106,6 +107,7 @@ export default class Statistics extends Vue {
       const x = [
         {
           title: dayjs(newlist[j].time).format("YYYY-MM-DD"),
+          total:0,
           items: [this.recordlist[j]],
         },
       ];
@@ -119,11 +121,17 @@ export default class Statistics extends Vue {
             x[c].items.push(a);
           } else {
             c = c + 1;
-            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"), items: [a] });
+            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"),total:0, items: [a] });
           }
           return dayjs(b.time).valueOf() - dayjs(a.time).valueOf();
         });
       this.x=x
+        x.map(r=>r.total=
+        r.items.reduce(
+  ( sum, cur ) => sum+cur.output,
+  0
+)
+  )
       // return x;
     }
     while (this.type !== this.recordlist[j].type) {
@@ -133,6 +141,7 @@ export default class Statistics extends Vue {
         const x = [
           {
             title: dayjs(newlist[j].time).format("YYYY-MM-DD"),
+            total:0,
             items: [this.recordlist[j]],
           },
         ];
@@ -145,15 +154,30 @@ export default class Statistics extends Vue {
             x[c].items.push(a);
           } else {
             c = c + 1;
-            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"), items: [a] });
+            x.push({ title: dayjs(a.time).format("YYYY-MM-DD"), total:0,items: [a] });
           }
           return dayjs(b.time).valueOf() - dayjs(a.time).valueOf();
         });
 
       // return x;
       this.x=x
+      console.log(this.x);
+      
+      const t=0
+      const title=''
+      const titlelist: any[]=[]
+        x.map(r=>r.total=
+        r.items.reduce(
+  ( sum, cur ) => sum+cur.output,
+  0
+)
+  )
+    
+    
       }
     }
+    console.log(this.x);
+    
     return this.x
   }
   mounted() {
