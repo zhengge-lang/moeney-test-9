@@ -20,7 +20,7 @@
     .layout-wrapper{
         display: flex;
         border: 1px solid green;
-        height: 100vh;
+        min-height: 100vh;
         flex-direction: column;;
     }
     .content{
