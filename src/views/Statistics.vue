@@ -8,6 +8,7 @@
         :dataSource="recordtypeList"
         :value.sync="type"
       />
+      {{type}}
       <Tabs
         class="y"
         class-prefix="interval"

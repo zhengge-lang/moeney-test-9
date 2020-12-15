@@ -29,6 +29,14 @@ import { TagHelper } from '@/mixins/TagHelper'
    computed: {
         
         datasource(){
+          console.log(store2.state.Taglist.length);
+          
+          if(!store2.state.Taglist||store2.state.Taglist.length==0){
+            store2.commit('createTag','衣')
+            store2.commit('createTag','食')
+            store2.commit('createTag','住')
+
+          }
           return store2.state.Taglist
         },
         count1(){

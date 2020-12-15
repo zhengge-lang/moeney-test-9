@@ -10,6 +10,7 @@ Vue.use(Vuex)
 const store= new Vuex.Store({
   state: {
     count:0,
+    // createRecordError:null,
     recordlist:[] as Recorditem[],
     Taglist:[] as Tag[]
   },
@@ -46,7 +47,7 @@ const store= new Vuex.Store({
         
         store.commit('saveTags') 
        
-        window.alert('成功')
+       
 
     },
     removeTag (state,id) {
