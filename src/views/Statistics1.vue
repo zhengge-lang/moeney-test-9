@@ -62,6 +62,14 @@ export default class Statistics extends Vue{
           console.log(this.oldday);
           
           
+    const str=`abdcadfasfdbadfafdasdfasyweroweurowqrewqrwqrebwqrewqrejwq`
+     const hash={}
+    for(let i=0;i<str.length;i++){
+      const key=str[i];
+                          let   value;
+      console.log(value)  ; 
+   }
+    console.log(hash)
           console.log(this.nowday1==this.oldday);
           
         })
